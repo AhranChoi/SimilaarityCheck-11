@@ -5,10 +5,10 @@
 
 using std::string;
 
-TEST(SimilarityCheckerTest, TC0) {
+TEST(SimilarityCheckerTest, CheckLengthWithSameLengthStrings) {
 	SimilarityChecker checker;
 	string inputA = "ASD";
 	string inputB = "DSA";
-	int ret = checker.checkLength(inputA, inputB);
-	EXPECT_EQ(ret, 60);
+
+	EXPECT_EQ(checker.checkLength(inputA, inputB), 60);
 }
