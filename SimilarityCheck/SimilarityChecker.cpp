@@ -3,12 +3,6 @@
 using std::string;
 
 class SimilarityChecker {
-private:
-	const int _LENGTH_MAX_POINT = 60;
-	const int _LENGTH_MIN_POINT = 0;
-	int LengthInputA;
-	int LengthInputB;
-
 public:
 	int compareStringLength(string inputA, string inputB) {
 		LengthInputA = inputA.size();
@@ -19,6 +13,11 @@ public:
 	}
 
 private:
+	const int _LENGTH_MAX_POINT = 60;
+	const int _LENGTH_MIN_POINT = 0;
+	int LengthInputA;
+	int LengthInputB;
+
 	bool isSameStringLength()
 	{
 		return LengthInputA == LengthInputB;
