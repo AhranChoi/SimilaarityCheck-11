@@ -13,7 +13,34 @@ public:
 	}
 
 	int checkAlphabet(string inputA, string inputB) {
-		if (inputA == inputB) return _ALPHABET_MAX_POINT;
+		int alphaCntA[26] = { 0 };
+		int alphaCntB[26] = { 0 };
+
+		int charIdx = 0;
+		for (int i = 0; i < inputA.length(); i++) {
+			charIdx = inputA[i] - 'A';
+			alphaCntA[charIdx]++;
+		}
+
+		for (int i = 0; i < inputB.length(); i++) {
+			charIdx = inputB[i] - 'A';
+			alphaCntB[charIdx]++;
+		}
+
+		int aCnt = 0;
+		int bCnt = 0;
+		int sameCnt = 0;
+		
+		for (int i = 0; i < 26; i++) {
+			if (alphaCntA[i] != 0) aCnt++;
+			if (alphaCntB[i] != 0) bCnt++;
+			if (alphaCntA[i] != 0 && alphaCntB[i] != 0) sameCnt++;
+		}
+
+		int totalCnt = aCnt + bCnt - sameCnt;
+		int score = sameCnt * 40 / totalCnt;
+
+		return score;
 	}
 
 private:
