@@ -1,6 +1,8 @@
 #include <string>
+#include <set>
 
 using std::string;
+using std::set;
 
 class SimilarityChecker {
 public:
@@ -19,18 +21,12 @@ public:
 	}
 
 	int compareStringAlphabet(string inputA, string inputB) {
-		int alphaListA[26] = { 0 };
-		int alphaListB[26] = { 0 };
-		existAlphabetList(inputA, alphaListA);
-		existAlphabetList(inputB, alphaListB);
+		set<char> alphaSetA;
+		set<char> alphaSetB;
 
-		int cntA = countAlphabetList(alphaListA);
-		int cntB = countAlphabetList(alphaListB);
-		int sameCnt = countSameAlphabet(alphaListA, alphaListB);
-		int totalCnt = cntA + cntB - sameCnt;
-		int score = sameCnt * 40 / totalCnt;
-
-		return score;
+		convertStringToCharSet(inputA, alphaSetA);
+		convertStringToCharSet(inputB, alphaSetB);
+		return calcAlphabetScore(alphaSetA, alphaSetB);
 	}
 
 private:
@@ -59,29 +55,25 @@ private:
 		return ((shortLength - gap) * _LENGTH_MAX_POINT) / shortLength;
 	}
 
-	void existAlphabetList(std::string& inputStr, int alphaList[26])
+	void convertStringToCharSet(std::string& str, std::set<char>& charSet)
 	{
-		int charIdx = 0;
-		for (int i = 0; i < inputStr.length(); i++) {
-			charIdx = inputStr[i] - 'A';
-			alphaList[charIdx]++;
+		for (auto ch : str) {
+			if (charSet.find(ch) == charSet.end()) charSet.insert(ch);
 		}
 	}
 
-	int countAlphabetList(int alphaCnt[26]) {
+	int countSameCharInSets(set<char>& charSetA, set<char>& charSetB) {
 		int result = 0;
-		for (int i = 0; i < 26; i++) {
-			if (alphaCnt[i] != 0) result++;
+		for (auto ch : charSetA) {
+			if (charSetB.find(ch) != charSetB.end()) result++;
 		}
 		return result;
 	}
 
-	int countSameAlphabet(int alphaListA[26], int alphaListB[26])
+	int calcAlphabetScore(set<char>& charSetA, set<char>& charSetB)
 	{
-		int result = 0;
-		for (int i = 0; i < 26; i++) {
-			if (alphaListA[i] != 0 && alphaListB[i] != 0) result++;
-		}
-		return result;
+		int sameCnt = countSameCharInSets(charSetA, charSetB);
+		int totalCnt = charSetA.size() + charSetB.size() - sameCnt;
+		return sameCnt * 40 / totalCnt;
 	}
 };
