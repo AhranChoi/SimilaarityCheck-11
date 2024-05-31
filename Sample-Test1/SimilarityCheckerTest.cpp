@@ -15,4 +15,5 @@ TEST_F(SimilarityCheckerFixture, CheckLength) {
 	EXPECT_EQ(checker.checkLength("A", "BB"), 0);
 	EXPECT_EQ(checker.checkLength("AAABB", "BAA"), 20);
 	EXPECT_EQ(checker.checkLength("AA", "AAE"), 30);
+	EXPECT_EQ(checker.checkLength("A", "AAAAA"), 0);
 }
