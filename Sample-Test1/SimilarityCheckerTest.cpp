@@ -5,26 +5,14 @@
 
 using std::string;
 
-TEST(SimilarityCheckerTest, CheckLengthWithSameLengthStrings) {
+class SimilarityCheckerFixture : public testing::Test {
+public:
 	SimilarityChecker checker;
-	string inputA = "ASD";
-	string inputB = "DSA";
+};
 
-	EXPECT_EQ(checker.checkLength(inputA, inputB), 60);
-}
-
-TEST(SimilarityCheckerTest, CheckLengthWithDoubleLengthStrings) {
-	SimilarityChecker checker;
-	string inputA = "ASD";
-	string inputB = "DSADSA";
-
-	EXPECT_EQ(checker.checkLength(inputA, inputB), 0);
-}
-
-TEST(SimilarityCheckerTest, CheckLengthWithDifferentLengthStrings) {
-	SimilarityChecker checker;
-	string inputA = "AAAA";
-	string inputB = "AAAAAA";
-
-	EXPECT_EQ(checker.checkLength(inputA, inputB), 30);
+TEST_F(SimilarityCheckerFixture, CheckLength) {
+	EXPECT_EQ(checker.checkLength("ASD", "DSA"), 60);
+	EXPECT_EQ(checker.checkLength("A", "BB"), 0);
+	EXPECT_EQ(checker.checkLength("AAABB", "BAA"), 20);
+	EXPECT_EQ(checker.checkLength("AA", "AAE"), 30);
 }

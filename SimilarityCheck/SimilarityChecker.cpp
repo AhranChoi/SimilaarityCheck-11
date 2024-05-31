@@ -3,21 +3,25 @@
 using std::string;
 
 class SimilarityChecker {
+private:
+	const int _LENGTH_MAX_POINT = 60;
+
 public:
 	int checkLength(string inputA, string inputB) {
-		int ret = 0;
-		if (inputA.length() == inputB.length()) return 60;
-		
-		int gap;
-		if (inputA.length() > inputB.length()) {
-			gap = (inputA.length() - inputB.length());
-			ret = ((inputB.length() - gap) * 60) / inputB.length();
-		}
-		else {
-			gap = (inputB.length() - inputA.length());
-			ret = ((inputA.length() - gap) * 60) / inputA.length();
-		}
+		if (isSameStringLength(inputA.length(), inputB.length())) return _LENGTH_MAX_POINT;
+		return getPartialLengthPoint(inputA.length(), inputB.length());
+	}
 
-		return ret;
+private:
+	bool isSameStringLength(int inputALength, int inputBLength)
+	{
+		return inputALength == inputBLength;
+	}
+
+	int getPartialLengthPoint(int inputALength, int inputBLength)
+	{
+		int gap = std::abs(inputALength - inputBLength);
+		int shortLength = (inputALength > inputBLength) ? inputBLength : inputALength;	
+		return ((shortLength - gap) * _LENGTH_MAX_POINT) / shortLength;
 	}
 };
