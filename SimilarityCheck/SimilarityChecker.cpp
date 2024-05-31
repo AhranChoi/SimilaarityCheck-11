@@ -5,37 +5,36 @@ using std::string;
 class SimilarityChecker {
 private:
 	const int _LENGTH_MAX_POINT = 60;
-	const int _ZERO_POINT = 0;
+	const int _LENGTH_MIN_POINT = 0;
+	int LengthInputA;
+	int LengthInputB;
 
 public:
 	int checkLength(string inputA, string inputB) {
-		int aLength = inputA.length();
-		int bLength = inputB.length();
-		if (isSameStringLength(aLength, bLength)) return _LENGTH_MAX_POINT;
-
-		if (aLength > bLength) {
-			if (aLength >= bLength * 2) return _ZERO_POINT;
-		}
-		else if (bLength >= aLength * 2) return _ZERO_POINT;
-
-		return getPartialLengthPoint(aLength, bLength);
+		LengthInputA = inputA.size();
+		LengthInputB = inputB.size();
+		if (isSameStringLength()) return _LENGTH_MAX_POINT;
+		if (isMoreThanDoubleLength()) return _LENGTH_MIN_POINT;
+		return getPartialLengthPoint();
 	}
 
 private:
-	bool isSameStringLength(int inputALength, int inputBLength)
+	bool isSameStringLength()
 	{
-		return inputALength == inputBLength;
+		return LengthInputA == LengthInputB;
 	}
 
-	bool isMoreThanDoubleLength(int inputALength, int inputBLength)
+	bool isMoreThanDoubleLength()
 	{
-		return inputALength == inputBLength;
+		if (LengthInputA >= LengthInputB * 2) return true;
+		if (LengthInputB >= LengthInputA * 2) return true;
+		return false;
 	}
 
-	int getPartialLengthPoint(int inputALength, int inputBLength)
+	int getPartialLengthPoint()
 	{
-		int gap = std::abs(inputALength - inputBLength);
-		int shortLength = (inputALength > inputBLength) ? inputBLength : inputALength;	
+		int gap = std::abs(LengthInputA - LengthInputB);
+		int shortLength = (LengthInputA > LengthInputB) ? LengthInputB : LengthInputA;
 		return ((shortLength - gap) * _LENGTH_MAX_POINT) / shortLength;
 	}
 };
