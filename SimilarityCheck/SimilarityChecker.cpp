@@ -10,7 +10,7 @@ private:
 	int LengthInputB;
 
 public:
-	int checkLength(string inputA, string inputB) {
+	int compareStringLength(string inputA, string inputB) {
 		LengthInputA = inputA.size();
 		LengthInputB = inputB.size();
 		if (isSameStringLength()) return _LENGTH_MAX_POINT;
