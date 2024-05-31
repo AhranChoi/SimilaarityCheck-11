@@ -13,12 +13,13 @@ public:
 	}
 
 	int checkAlphabet(string inputA, string inputB) {
-		if (inputA == inputB) return 40;
+		if (inputA == inputB) return _ALPHABET_MAX_POINT;
 	}
 
 private:
 	const int _LENGTH_MAX_POINT = 60;
 	const int _LENGTH_MIN_POINT = 0;
+	const int _ALPHABET_MAX_POINT = 40;
 	int LengthInputA;
 	int LengthInputB;
 
