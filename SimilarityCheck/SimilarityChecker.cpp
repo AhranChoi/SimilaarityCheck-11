@@ -12,6 +12,10 @@ public:
 		return getPartialLengthPoint();
 	}
 
+	int checkAlphabet(string inputA, string inputB) {
+		if (inputA == inputB) return 40;
+	}
+
 private:
 	const int _LENGTH_MAX_POINT = 60;
 	const int _LENGTH_MIN_POINT = 0;
