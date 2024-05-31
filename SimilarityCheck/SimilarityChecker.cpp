@@ -74,6 +74,6 @@ private:
 	{
 		int sameCnt = countSameCharInSets(charSetA, charSetB);
 		int totalCnt = charSetA.size() + charSetB.size() - sameCnt;
-		return sameCnt * 40 / totalCnt;
+		return sameCnt * _ALPHABET_MAX_POINT / totalCnt;
 	}
 };
