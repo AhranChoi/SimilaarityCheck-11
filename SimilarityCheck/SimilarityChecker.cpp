@@ -4,6 +4,12 @@ using std::string;
 
 class SimilarityChecker {
 public:
+	int compareStringSimilarity(string inputA, string inputB) {
+		int lengthScore = compareStringLength(inputA, inputB);
+		int alphaScore = compareStringAlphabet(inputA, inputB);
+		return lengthScore + alphaScore;
+	}
+
 	int compareStringLength(string inputA, string inputB) {
 		LengthInputA = inputA.size();
 		LengthInputB = inputB.size();
@@ -12,32 +18,16 @@ public:
 		return getPartialLengthPoint();
 	}
 
-	int checkAlphabet(string inputA, string inputB) {
-		int alphaCntA[26] = { 0 };
-		int alphaCntB[26] = { 0 };
+	int compareStringAlphabet(string inputA, string inputB) {
+		int alphaListA[26] = { 0 };
+		int alphaListB[26] = { 0 };
+		existAlphabetList(inputA, alphaListA);
+		existAlphabetList(inputB, alphaListB);
 
-		int charIdx = 0;
-		for (int i = 0; i < inputA.length(); i++) {
-			charIdx = inputA[i] - 'A';
-			alphaCntA[charIdx]++;
-		}
-
-		for (int i = 0; i < inputB.length(); i++) {
-			charIdx = inputB[i] - 'A';
-			alphaCntB[charIdx]++;
-		}
-
-		int aCnt = 0;
-		int bCnt = 0;
-		int sameCnt = 0;
-		
-		for (int i = 0; i < 26; i++) {
-			if (alphaCntA[i] != 0) aCnt++;
-			if (alphaCntB[i] != 0) bCnt++;
-			if (alphaCntA[i] != 0 && alphaCntB[i] != 0) sameCnt++;
-		}
-
-		int totalCnt = aCnt + bCnt - sameCnt;
+		int cntA = countAlphabetList(alphaListA);
+		int cntB = countAlphabetList(alphaListB);
+		int sameCnt = countSameAlphabet(alphaListA, alphaListB);
+		int totalCnt = cntA + cntB - sameCnt;
 		int score = sameCnt * 40 / totalCnt;
 
 		return score;
@@ -67,5 +57,31 @@ private:
 		int gap = std::abs(LengthInputA - LengthInputB);
 		int shortLength = (LengthInputA > LengthInputB) ? LengthInputB : LengthInputA;
 		return ((shortLength - gap) * _LENGTH_MAX_POINT) / shortLength;
+	}
+
+	void existAlphabetList(std::string& inputStr, int alphaList[26])
+	{
+		int charIdx = 0;
+		for (int i = 0; i < inputStr.length(); i++) {
+			charIdx = inputStr[i] - 'A';
+			alphaList[charIdx]++;
+		}
+	}
+
+	int countAlphabetList(int alphaCnt[26]) {
+		int result = 0;
+		for (int i = 0; i < 26; i++) {
+			if (alphaCnt[i] != 0) result++;
+		}
+		return result;
+	}
+
+	int countSameAlphabet(int alphaListA[26], int alphaListB[26])
+	{
+		int result = 0;
+		for (int i = 0; i < 26; i++) {
+			if (alphaListA[i] != 0 && alphaListB[i] != 0) result++;
+		}
+		return result;
 	}
 };
